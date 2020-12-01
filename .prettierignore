@@ -5,7 +5,9 @@ node_modules
 LICENSE
 /dist
 /typings
+yarn.lock
 
+**/*.svelte
 **/*.png
 **/*.ico
 **/*.map

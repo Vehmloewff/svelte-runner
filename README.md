@@ -1,6 +1,6 @@
 # Svelte Runner
 
-Run svelte components.  Zero configuration necessary.
+Run svelte components. Zero configuration necessary.
 
 ## Quick start
 
@@ -9,19 +9,19 @@ yarn global add svelte-runner
 svelte-runner dev
 ```
 
-Bundles `App.svelte` and all it's dependencies.  It then serves up the bundled code on port `3000`, using HMR to instantly update the app when the source code is updated.
+Bundles `App.svelte` and all it's dependencies. It then serves up the bundled code on port `3000`, using HMR to instantly update the app when the source code is updated.
 
-Want more customization than that?  Don't worry, check out the docs.  Customization is by no means overlooked.
+Want more customization than that? Don't worry, check out the docs. Customization is by no means overlooked.
 
 ## Why?
 
 There's more than one reason...
 
-I love things to be simple and efficient.  Why not accomplish the work that is generally done by multiple configuration files in one cli command?  It's also a lot easier to update one dependency, than to have to continually track `nollup`, `rollup`, `typescript`, `svelte`, `svelte-hmr`, etc., while always having to worry about their compatibility to each other.
+I love things to be simple and efficient. Why not accomplish the work that is generally done by multiple configuration files in one cli command? It's also a lot easier to update one dependency, than to have to continually track `nollup`, `rollup`, `typescript`, `svelte`, `svelte-hmr`, etc., while always having to worry about their compatibility to each other.
 
-NodeJS is not the only language that I use.  Keeping away from project root configurations for multiple frameworks across multiple languages is a high priority for me.
+NodeJS is not the only language that I use. Keeping away from project root configurations for multiple frameworks across multiple languages is a high priority for me.
 
-Ships to a single binary.  It would be chore indeed to name all the benefits of this.
+Ships to a single binary. It would be chore indeed to name all the benefits of this.
 
 ## CLI Usage
 
@@ -87,12 +87,13 @@ Static maps tell `svelte-runner` how to serve up static content.
 ```
 
 When a request comes in, `svelte-runner` will follow these steps:
--	If the path matches `/_sr-gen/main.js`, the compiled and bundled svelte code will be served.  Otherwise
--	If the path matches `/_sr-gen/main.css`, the bundled css code will be served.
--	If the path matches the first pattern, `/api/**`, the request will be relayed to `localhost:8080`.
--	If the path matches the second pattern, `/**`, ask the folder `assets` if it contains a file whose path represents the part of the path represented by the wildcard (`**`).  If a matching file is not found, continue.
--	If the method of the request is `GET`, serve up the app template (`index.html`).
+
+-   If the path matches `/_sr-gen/main.js`, the compiled and bundled svelte code will be served. Otherwise
+-   If the path matches `/_sr-gen/main.css`, the bundled css code will be served.
+-   If the path matches the first pattern, `/api/**`, the request will be relayed to `localhost:8080`.
+-   If the path matches the second pattern, `/**`, ask the folder `assets` if it contains a file whose path represents the part of the path represented by the wildcard (`**`). If a matching file is not found, continue.
+-   If the method of the request is `GET`, serve up the app template (`index.html`).
 
 ## Known issues
 
-- "Additional watch scripts" support with live reloading does not work at present.
+-   "Additional watch scripts" support with live reloading does not work at present.
