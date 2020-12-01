@@ -1,6 +1,6 @@
 {
 	"name": "svelte-runner",
-	"version": "1.0.0",
+	"version": "0.0.0",
 	"description": "Run svelte components.  Zero configuration necessary.",
 	"keywords": [
 		"svelte",
