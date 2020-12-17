@@ -6,15 +6,14 @@ export function makeTemplate(separateStyles: boolean, coreOptions: CoreOptions) 
 		`<meta charset="UTF-8">`,
 		`<meta name="viewport" content="width=device-width, initial-scale=1.0">`,
 		`<title>${coreOptions.title || 'Svelte App'}</title>`,
-		`<script defer src="${generatedLocations.js}"></script>`,
 	]
 
 	if (separateStyles) headTags.push(`<link rel="stylesheet" href="${generatedLocations.css}">`)
 
-	if (coreOptions.additionalScripts)
-		headTags.push(
-			...coreOptions.additionalScripts.map(file => `<script defer src="${generatedLocations.additionalScript(file)}"></script>`)
-		)
+	headTags.push(...coreOptions.additionalScripts.map(file => `<script defer src="${generatedLocations.encodePath(file)}"></script>`))
+	headTags.push(...coreOptions.additionalStylesheets.map(file => `<link rel="stylesheet" href="${generatedLocations.encodePath(file)}">`))
+
+	headTags.push(`<script defer src="${generatedLocations.js}"></script>`)
 
 	if (coreOptions.headers) headTags.push(coreOptions.headers)
 

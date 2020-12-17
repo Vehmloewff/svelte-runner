@@ -19,10 +19,18 @@ program
 	.option('--real-favicon <fileOrJSON>', 'Json options for real-favicon')
 	.option('--headers <fileOrTags>', 'Extra tags to be inserted into the <head> of the template')
 	.option('--template <stringOrFile>', 'Custom template (index.html)')
-	.option('--static-map <fileOrJSON>', 'Static map.  https://github.com/Vehmloewff/svelte-runner#static-meta')
+	.option('--static-map <fileOrJSON>', 'Static map.  https://github.com/Vehmloewff/svelte-runner#static-map')
+	.option('-n, --node-modules-path', 'Path to the location where the node_modules are installed', defaultCoreOptions.nodeModulesPath)
+	.option('--banner <codeOrFile>', 'Code to be inserted into the bundle before the svelte code')
+	.option('--footer <codeOrFile>', 'Code to be inserted into the bundle after the svelte code')
 
 let additionalScripts: string[] = []
 let additionalWatchScripts: string[] = []
+let additionalStylesheets: string[] = []
+
+program.option('-c, --css <file>', 'Additional stylesheet to be added to the head.  Can be supplied more than once.', file => {
+	additionalStylesheets.push(file)
+})
 
 program.option('--add-script <file>', "Path to an additional js file to be inserted into the app's head", value => {
 	additionalScripts.push(value)
@@ -68,6 +76,10 @@ async function getCoreOptions(): Promise<Partial<CoreOptions>> {
 		template: program.realFavicon ? await readIfFilepath(program.template) : undefined,
 		staticMap: program.staticMap ? parseJSON(await readIfFilepath(program.staticMap), 'Could not load static map:') : undefined,
 		additionalScripts: additionalScripts.length ? additionalScripts : undefined,
+		additionalStylesheets: additionalStylesheets.length ? additionalStylesheets : undefined,
+		nodeModulesPath: program.nodeModulesPath,
+		banner: program.banner ? async () => await readIfFilepath(program.banner) : undefined,
+		footer: program.footer ? async () => await readIfFilepath(program.footer) : undefined,
 	}
 
 	Object.keys(res).forEach(key => {

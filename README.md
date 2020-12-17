@@ -40,6 +40,7 @@ Options:
   --headers <fileOrTags>       Extra tags to be inserted into the <head> of the template
   --template <stringOrFile>    Custom template (index.html)
   --static-map <fileOrJSON>    Static map.  https://github.com/Vehmloewff/svelte-runner#static-map
+  -c, --css <file>             Additional stylesheet to be added to the head.  Can be supplied more than once.
   --add-script <file>          Path to an additional js file to be inserted into the app's head
   -h, --help                   display help for command
 
@@ -97,3 +98,4 @@ When a request comes in, `svelte-runner` will follow these steps:
 ## Known issues
 
 -   "Additional watch scripts" support with live reloading does not work at present.
+-   Weird warning: `[Svelte HMR] Setting css option to false (set hot.noDisableCss to true to bypass)`

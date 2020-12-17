@@ -32,9 +32,9 @@ export async function dev(coreOptions: Partial<CoreOptions> = {}, devOptions: De
 			file: generatedLocations.js,
 		},
 
-		plugins: rollupPlugins(
-			options.entryFile,
-			svelte({
+		plugins: rollupPlugins({
+			entryFile: options.entryFile,
+			svelte: svelte({
 				// @ts-ignore
 				dev: true,
 				hot: devOptions.disableHMR ? false : hmrOptions,
@@ -45,8 +45,11 @@ export async function dev(coreOptions: Partial<CoreOptions> = {}, devOptions: De
 					  }
 					: false,
 				preprocess: sveltePreprocess(),
-			})
-		),
+			}),
+			nodeModulesPath: options.nodeModulesPath,
+			banner: options.banner,
+			footer: options.footer,
+		}),
 		watch: {
 			clearScreen: false,
 		},
@@ -64,5 +67,7 @@ export async function dev(coreOptions: Partial<CoreOptions> = {}, devOptions: De
 				hot: devOptions.disableHMR ? false : true,
 			})
 		},
+		stylesheets: options.additionalStylesheets,
+		scripts: options.additionalScripts,
 	})
 }

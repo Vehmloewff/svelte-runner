@@ -64,6 +64,27 @@ export interface CoreOptions {
 	 * @default []
 	 */
 	additionalScripts: string[]
+
+	/**
+	 * Path to additional stylesheets to be added to the head
+	 */
+	additionalStylesheets: string[]
+
+	/**
+	 * Where the node_modules folder is located.
+	 * @default ".config/deps/node_modules"
+	 */
+	nodeModulesPath: string
+
+	/**
+	 * Code to be inserted into the bundle before the svelte code
+	 */
+	banner(): Promise<string>
+
+	/**
+	 * code to be inserted into the bundle after the svelte code
+	 */
+	footer(): Promise<string>
 }
 
 export interface DevOptions {

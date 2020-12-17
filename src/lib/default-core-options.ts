@@ -5,6 +5,7 @@ export const defaultCoreOptions: CoreOptions = {
 	title: 'Svelte App',
 	entryFile: 'App.svelte',
 	additionalScripts: [],
+	additionalStylesheets: [],
 	headers: ``,
 	host: 'localhost',
 	icon: null,
@@ -17,4 +18,7 @@ export const defaultCoreOptions: CoreOptions = {
 		},
 	},
 	template: null,
+	nodeModulesPath: './.config/deps/node_modules',
+	banner: async () => ``,
+	footer: async () => ``,
 }

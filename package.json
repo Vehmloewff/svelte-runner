@@ -42,6 +42,14 @@
 		"scripts": "node_modules/svelte-preprocess/dist/transformers/**/*.js",
 		"assets": "node_modules/rollup-plugin-hot-nollup/compat-nollup.runtime.js"
 	},
+	"exports": {
+		".": {
+			"require": "./dist/main.js"
+		},
+		"./server": {
+			"require": "./dist/main2.js"
+		}
+	},
 	"devDependencies": {
 		"@babel/core": "^7.12.8",
 		"@types/babel__core": "^7.1.12",

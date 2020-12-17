@@ -15,9 +15,11 @@ export interface ServerParams {
 	host: string
 	open: boolean
 	css: null | (() => { code: string; map: string })
+	stylesheets: string[]
+	scripts: string[]
 }
 
-export async function server({ staticMap, template, serveBuild, port, host, open, css }: ServerParams) {
+export async function server({ staticMap, template, serveBuild, port, host, open, css, stylesheets, scripts }: ServerParams) {
 	const app = express()
 
 	app.use(serveBuild(app))
@@ -33,6 +35,20 @@ export async function server({ staticMap, template, serveBuild, port, host, open
 			res.send(css().map)
 		})
 	}
+
+	stylesheets.forEach(stylesheet => {
+		app.get(generatedLocations.encodePath(stylesheet), (req, res) => {
+			res.contentType('.css')
+			res.sendFile(makePathAbsolute(stylesheet))
+		})
+	})
+
+	scripts.forEach(script => {
+		app.get(generatedLocations.encodePath(script), (req, res) => {
+			res.contentType('.css')
+			res.sendFile(makePathAbsolute(script))
+		})
+	})
 
 	app.use(async (req, res, next) => {
 		const resolution = await resolveStaticMap(staticMap, req.path, req.method)

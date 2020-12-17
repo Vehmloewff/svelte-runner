@@ -1,6 +1,7 @@
 <script>
 	console.log('hi')
 
+	export let foo
 	let name = 'World'
 </script>
 

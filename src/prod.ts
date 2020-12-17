@@ -36,6 +36,8 @@ export async function prod(coreOptions: Partial<CoreOptions> = {}, prodOptions: 
 		open,
 		port,
 		serveBuild,
+		stylesheets: options.additionalStylesheets,
+		scripts: options.additionalScripts,
 	})
 }
 
@@ -45,16 +47,19 @@ async function getJSAndCSS(options: CoreOptions, prodOptions: ProdOptions = {}) 
 
 	const bundle = await rollup({
 		input: options.entryFile,
-		plugins: rollupPlugins(
-			options.entryFile,
-			svelte({
+		plugins: rollupPlugins({
+			entryFile: options.entryFile,
+			svelte: svelte({
 				css: cssObj => {
 					css = cssObj.code
 					cssMap = JSON.stringify(cssObj.map)
 				},
 				preprocess: sveltePreprocess(),
-			})
-		).concat(prodOptions.minify && terser()),
+			}),
+			nodeModulesPath: options.nodeModulesPath,
+			banner: options.banner,
+			footer: options.footer,
+		}).concat(prodOptions.minify && terser()),
 	})
 
 	const isSvelteEntry = options.entryFile.slice(-7) === '.svelte'

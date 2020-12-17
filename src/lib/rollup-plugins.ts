@@ -8,7 +8,15 @@ import virtual from '@rollup/plugin-virtual'
 // @ts-ignore
 import sucrase from '@rollup/plugin-sucrase'
 
-export const rollupPlugins = (entryFile: string, svelte: Plugin) => {
+export interface RollupPluginsParams {
+	entryFile: string
+	svelte: Plugin
+	nodeModulesPath: string
+	banner: () => Promise<string>
+	footer: () => Promise<string>
+}
+
+export const rollupPlugins = ({ entryFile, svelte, nodeModulesPath, banner, footer }: RollupPluginsParams) => {
 	return [
 		entryFile.slice(-7) === '.svelte' &&
 			virtual({
@@ -26,8 +34,16 @@ export const rollupPlugins = (entryFile: string, svelte: Plugin) => {
 		nodeResolve({
 			browser: true,
 			dedupe: ['svelte'],
+			customResolveOptions: {
+				moduleDirectory: nodeModulesPath,
+			},
 		}),
 		commonjs(),
 		sucrase({ transforms: ['typescript'] }),
+		{
+			name: 'svelte-runner:add-banner-and-footer',
+			banner,
+			footer,
+		},
 	]
 }
