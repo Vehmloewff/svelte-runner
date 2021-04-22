@@ -102,3 +102,4 @@ When a request comes in, `svelte-runner` will follow these steps:
 
 -   "Additional watch scripts" support with live reloading does not work at present.
 -   Weird warning: `[Svelte HMR] Setting css option to false (set hot.noDisableCss to true to bypass)`
+-   Files imported from urls are not cached after being downloaded

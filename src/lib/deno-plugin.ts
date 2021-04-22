@@ -5,6 +5,7 @@ import { version as svelteVersion } from 'svelte/package.json'
 import pathUtils from 'path'
 import { Plugin } from 'rollup'
 import { ImportMap, resolve } from './import-map'
+import { getDenoFile } from './get-deno-file'
 
 export function denoPlugin(importMapLocation: string): Plugin {
 	const importMap = getImportMap(importMapLocation)
@@ -14,8 +15,8 @@ export function denoPlugin(importMapLocation: string): Plugin {
 		resolveId(specifier, importer) {
 			let isEntry = false
 
-			if (!importer) {
-				importer = `file://${process.cwd()}/@Entry`
+			if (!importer || /virtual:@Entry/.test(importer)) {
+				importer = `file://${process.cwd()}/@CliEntry`
 				isEntry = true
 			}
 
@@ -41,22 +42,9 @@ export function denoPlugin(importMapLocation: string): Plugin {
 			this.error(`Could not resolve '${specifier}'`)
 		},
 		async load(id) {
-			if (id.startsWith('https://') || id.startsWith('http://'))
-				return await fetch(id)
-					.then(res => {
-						if (res.ok) return res.text()
-						this.error(`Could not load '${id}'`)
-					})
-					.catch(err => {
-						this.error(`Could not download '${id}': ${err}`)
-					})
+			if (id.startsWith('/')) id = `file://${id}`
 
-			return await new Promise(resolve => {
-				readFile(id, 'utf-8', (err, data) => {
-					if (err) this.error(`Could not load file://${id}`)
-					else resolve(data)
-				})
-			})
+			return await getDenoFile(id)
 		},
 	}
 }
