@@ -1,6 +1,5 @@
-import { readFileSync, readFile } from 'fs'
+import { readFileSync } from 'fs'
 import { URL } from 'url'
-import fetch from 'node-fetch'
 import { version as svelteVersion } from 'svelte/package.json'
 import pathUtils from 'path'
 import { Plugin } from 'rollup'

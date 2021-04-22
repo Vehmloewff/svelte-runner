@@ -1,4 +1,5 @@
 import { readFile as nodeReadFile } from 'fs'
+import fetch from 'node-fetch'
 
 function readFile(filepath: string) {
 	return new Promise<string>((resolve, reject) => {
