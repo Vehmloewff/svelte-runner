@@ -29,7 +29,7 @@
 		"svelte-runner": "./dist/cli.js"
 	},
 	"scripts": {
-		"build": "rollup -c --environment NODE_ENV:production && node scripts/tweak-bundle",
+		"build": "rollup -c --environment NODE_ENV:production && node scripts/tweak-bundle && tsc",
 		"live": "rollup -c && node dist/cli.js",
 		"test": "rollup -c --environment=NODE_ENV:test",
 		"clean": "rm -rf dist typings",
