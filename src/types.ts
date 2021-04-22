@@ -71,8 +71,25 @@ export interface CoreOptions {
 	additionalStylesheets: string[]
 
 	/**
+	 * Use the deno module resolution strategy
+	 *
+	 * @default false
+	 */
+	deno: boolean
+
+	/**
+	 * The optional import map to use for deno module resolution.  Only valid if `deno` is true.
+	 *
+	 * @default './import-map.json'
+	 */
+	denoImportMap: string
+
+	/**
 	 * Where the node_modules folder is located.
-	 * @default ".config/deps/node_modules"
+	 *
+	 * Only valid if `deno` is false or unspecified.
+	 *
+	 * @default "./node_modules"
 	 */
 	nodeModulesPath: string
 
@@ -107,6 +124,16 @@ export interface ProdOptions {
 	 * @default false
 	 */
 	minify?: boolean
+}
+
+export interface BuildOptions {
+	/**
+	 * If `true`, only the javascript and css bundles will be emitted.
+	 * Template, favicon, etc. will all be omitted.
+	 *
+	 * @default false
+	 */
+	coreOnly?: boolean
 }
 
 export interface StaticMap {

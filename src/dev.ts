@@ -24,7 +24,7 @@ export async function dev(coreOptions: Partial<CoreOptions> = {}, devOptions: De
 	let cssCode = ``
 
 	const config: RollupOptions = {
-		input: '@Entry',
+		input: options.entryFile.slice(-7) === '.svelte' ? '@Entry' : options.entryFile,
 		output: {
 			sourcemap: true,
 			format: 'iife',
@@ -46,6 +46,8 @@ export async function dev(coreOptions: Partial<CoreOptions> = {}, devOptions: De
 					: false,
 				preprocess: sveltePreprocess(),
 			}),
+			deno: options.deno,
+			denoImportMap: options.denoImportMap,
 			nodeModulesPath: options.nodeModulesPath,
 			banner: options.banner,
 			footer: options.footer,

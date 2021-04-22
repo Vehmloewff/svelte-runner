@@ -20,7 +20,17 @@ program
 	.option('--headers <fileOrTags>', 'Extra tags to be inserted into the <head> of the template')
 	.option('--template <stringOrFile>', 'Custom template (index.html)')
 	.option('--static-map <fileOrJSON>', 'Static map.  https://github.com/Vehmloewff/svelte-runner#static-map')
-	.option('-n, --node-modules-path', 'Path to the location where the node_modules are installed', defaultCoreOptions.nodeModulesPath)
+	.option('--deno', 'Support the deno module resolution strategy')
+	.option(
+		'--deno-import-map <filepath>',
+		'Import map for resolving deno modules.  Only valid if --deno is passed.',
+		defaultCoreOptions.denoImportMap
+	)
+	.option(
+		'-n, --node-modules-path',
+		'Path to the location where the node_modules are installed.  Invalid if --deno is passed.',
+		defaultCoreOptions.nodeModulesPath
+	)
 	.option('--banner <codeOrFile>', 'Code to be inserted into the bundle before the svelte code')
 	.option('--footer <codeOrFile>', 'Code to be inserted into the bundle after the svelte code')
 
@@ -73,10 +83,13 @@ async function getCoreOptions(): Promise<Partial<CoreOptions>> {
 		realFavicon: program.realFavicon
 			? parseJSON(await readIfFilepath(program.realFavicon), 'Could not load realFavicon meta:')
 			: undefined,
-		template: program.realFavicon ? await readIfFilepath(program.template) : undefined,
+		headers: program.headers ? await readIfFilepath(program.headers) : undefined,
+		template: program.template ? await readIfFilepath(program.template) : undefined,
 		staticMap: program.staticMap ? parseJSON(await readIfFilepath(program.staticMap), 'Could not load static map:') : undefined,
 		additionalScripts: additionalScripts.length ? additionalScripts : undefined,
 		additionalStylesheets: additionalStylesheets.length ? additionalStylesheets : undefined,
+		deno: program.deno,
+		denoImportMap: program.denoImportMap,
 		nodeModulesPath: program.nodeModulesPath,
 		banner: program.banner ? async () => await readIfFilepath(program.banner) : undefined,
 		footer: program.footer ? async () => await readIfFilepath(program.footer) : undefined,

@@ -46,7 +46,7 @@ async function getJSAndCSS(options: CoreOptions, prodOptions: ProdOptions = {}) 
 	let cssMap = ``
 
 	const bundle = await rollup({
-		input: options.entryFile,
+		input: options.entryFile.slice(-7) === '.svelte' ? '@Entry' : options.entryFile,
 		plugins: rollupPlugins({
 			entryFile: options.entryFile,
 			svelte: svelte({
@@ -56,6 +56,8 @@ async function getJSAndCSS(options: CoreOptions, prodOptions: ProdOptions = {}) 
 				},
 				preprocess: sveltePreprocess(),
 			}),
+			deno: options.deno,
+			denoImportMap: options.denoImportMap,
 			nodeModulesPath: options.nodeModulesPath,
 			banner: options.banner,
 			footer: options.footer,

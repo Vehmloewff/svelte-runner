@@ -18,7 +18,9 @@ export const defaultCoreOptions: CoreOptions = {
 		},
 	},
 	template: null,
-	nodeModulesPath: './.config/deps/node_modules',
+	deno: false,
+	denoImportMap: './import-map.json',
+	nodeModulesPath: './node_modules',
 	banner: async () => ``,
 	footer: async () => ``,
 }

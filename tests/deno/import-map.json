@@ -1,0 +1,6 @@
+{
+	"imports": {
+		"foo": "./lib/foo.ts",
+		"bar": "./lib/bar.ts"
+	}
+}
