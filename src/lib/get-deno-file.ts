@@ -1,13 +1,28 @@
 import { readFile as nodeReadFile } from 'fs'
 import fetch from 'node-fetch'
 
-function readFile(filepath: string) {
-	return new Promise<string>((resolve, reject) => {
-		nodeReadFile(filepath, 'utf-8', (err, data) => {
-			if (err) reject(`Could not load file://${filepath}`)
-			else resolve(data)
+async function readFile(filepath: string) {
+	const read = (filepath: string) =>
+		new Promise<string>((resolve, reject) => {
+			nodeReadFile(filepath, 'utf-8', (err, data) => {
+				if (err) reject(`Could not load file://${filepath}`)
+				else resolve(data)
+			})
 		})
-	})
+
+	try {
+		return await read(filepath)
+	} catch (_) {
+		try {
+			return await read(filepath + '.ts')
+		} catch (_) {
+			try {
+				return await read(filepath + '.js')
+			} catch (_) {
+				throw `Could not load file://${filepath}`
+			}
+		}
+	}
 }
 
 async function fetchFile(href: string) {

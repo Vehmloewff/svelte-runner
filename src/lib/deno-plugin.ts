@@ -32,7 +32,7 @@ export function denoPlugin(importMapLocation: string): Plugin {
 
 			if (isEntry || specifier.startsWith('./') || specifier.startsWith('../')) {
 				const urlBreakdown = new URL(importer.startsWith('/') ? `file://${importer}` : importer)
-				const path = pathUtils.normalize(pathUtils.join(pathUtils.dirname(urlBreakdown.pathname), specifier))
+				const path = pathUtils.normalize(pathUtils.join(urlBreakdown.host, pathUtils.dirname(urlBreakdown.pathname), specifier))
 
 				if (urlBreakdown.protocol === 'file:') return path
 				return `${urlBreakdown.protocol}//${path}`
